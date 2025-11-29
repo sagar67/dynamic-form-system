@@ -22,7 +22,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     /* Fix for "Option 'baseUrl' is deprecated" */
-    "ignoreDeprecations": "6.0",
+    "ignoreDeprecations": "5.0",
     /* SHADCN REQUIRED CONFIG */
     "baseUrl": ".",
     "paths": {
