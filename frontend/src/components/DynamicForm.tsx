@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
@@ -15,6 +16,14 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { ChevronsUpDown, Loader2, Check } from "lucide-react";
 
 import { fetchSchema, submitForm } from "../api";
@@ -130,6 +139,10 @@ export default function DynamicForm() {
     queryKey: ["schema"],
     queryFn: fetchSchema,
   });
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [dialogTimeoutId, setDialogTimeoutId] = useState<NodeJS.Timeout | null>(
+    null
+  );
 
   // Build schema conditionally, but BEFORE rendering decisions
   const zodSchema = schema ? buildZodSchema(schema) : null;
@@ -163,7 +176,13 @@ export default function DynamicForm() {
         await submitForm(transformedValue);
         queryClient.invalidateQueries({ queryKey: ["submissions"] });
         formApi.reset();
-        alert("Submitted!");
+
+        // Show dialog and set auto-close timer
+        setShowSuccessDialog(true);
+        const timeoutId = setTimeout(() => {
+          setShowSuccessDialog(false);
+        }, 3000);
+        setDialogTimeoutId(timeoutId);
       } catch (err: any) {
         const details = err?.response?.data?.details;
         if (details && typeof details === "object") {
@@ -175,6 +194,14 @@ export default function DynamicForm() {
     },
   });
 
+  // Cleanup timeout on component unmount
+  useEffect(() => {
+    return () => {
+      if (dialogTimeoutId) {
+        clearTimeout(dialogTimeoutId);
+      }
+    };
+  }, [dialogTimeoutId]);
   /* ---------------------------------------------------
      LOADING / ERROR STATES (after hooks)
   --------------------------------------------------- */
@@ -246,6 +273,34 @@ export default function DynamicForm() {
           </Button>
         </form>
       </CardContent>
+
+      {/* Success Dialog Modal */}
+      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <DialogContent
+          onEscapeKeyDown={(e) => e.preventDefault()}
+          onPointerDownOutside={(e) => e.preventDefault()}
+          className="sm:max-w-[425px]"
+        >
+          <DialogHeader>
+            <DialogTitle>Success!</DialogTitle>
+            <DialogDescription>
+              Your submission has been recorded. This window will close
+              automatically.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowSuccessDialog(false);
+                if (dialogTimeoutId) clearTimeout(dialogTimeoutId);
+              }}
+            >
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

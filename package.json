@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "dev": "turbo run dev",
-    "build": "turbo run build",
+    "build": "cd frontend && npm run build",
     "install:all": "npm install"
   },
   "devDependencies": {
