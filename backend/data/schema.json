@@ -1,0 +1,71 @@
+{
+  "title": "Employee Onboarding",
+  "description": "Please fill out the details for the new employee.",
+  "fields": [
+    {
+      "id": "fullName",
+      "label": "Full Name",
+      "type": "text",
+      "placeholder": "John Doe",
+      "required": true,
+      "validation": { "minLength": 2, "maxLength": 50 }
+    },
+    {
+      "id": "email",
+      "label": "Email Address",
+      "type": "text",
+      "placeholder": "john@example.com",
+      "required": true,
+      "validation": { "regex": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$" }
+    },
+    {
+      "id": "department",
+      "label": "Department",
+      "type": "select",
+      "required": true,
+      "options": [
+        { "value": "hr", "label": "Human Resources" },
+        { "value": "eng", "label": "Engineering" },
+        { "value": "marketing", "label": "Marketing" }
+      ]
+    },
+    {
+      "id": "experience",
+      "label": "Years of Experience",
+      "type": "number",
+      "required": true,
+      "validation": { "min": 0, "max": 50 }
+    },
+    {
+      "id": "skills",
+      "label": "Key Skills",
+      "type": "multi-select",
+      "required": true,
+      "options": [
+        { "value": "react", "label": "React" },
+        { "value": "node", "label": "Node.js" },
+        { "value": "sql", "label": "SQL" },
+        { "value": "python", "label": "Python" }
+      ],
+      "validation": { "minSelected": 1, "maxSelected": 3 }
+    },
+    {
+      "id": "startDate",
+      "label": "Start Date",
+      "type": "date",
+      "required": true,
+      "validation": { "minDate": "2024-01-01" }
+    },
+    {
+      "id": "bio",
+      "label": "Short Bio",
+      "type": "textarea",
+      "validation": { "maxLength": 200 }
+    },
+    {
+      "id": "remote",
+      "label": "Remote Worker?",
+      "type": "switch"
+    }
+  ]
+}

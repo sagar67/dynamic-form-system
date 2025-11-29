@@ -1,0 +1,17 @@
+{
+  "name": "dynamic-form-system",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "install:all": "npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0",
+    "turbo": "^1.10.0"
+  }
+}
