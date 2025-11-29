@@ -61,7 +61,7 @@ export default function SubmissionsTable() {
       cell: (info) => (
         <button
           onClick={() => setSelectedSubmission(info.row.original)}
-          className="text-blue-600 hover:underline flex items-center gap-1"
+          className="text-blue-600 hover:underline flex items-center gap-1 cursor-pointer"
         >
           <Eye className="w-4 h-4" /> View
         </button>
@@ -175,7 +175,7 @@ export default function SubmissionsTable() {
           <div className="bg-white p-6 rounded-lg w-full max-w-lg shadow-xl relative animate-in fade-in zoom-in duration-200">
             <button
               onClick={() => setSelectedSubmission(null)}
-              className="absolute top-2 right-2 text-xl font-bold"
+              className="absolute top-2 right-2 text-xl font-bold cursor-pointer"
             >
               &times;
             </button>
@@ -189,7 +189,7 @@ export default function SubmissionsTable() {
                     <span className="font-semibold text-slate-600 capitalize">
                       {key}
                     </span>
-                    <span className="col-span-2 text-slate-900 break-words">
+                    <span className="col-span-2 text-slate-900 wrap-break-words">
                       {Array.isArray(value) ? value.join(", ") : String(val)}
                     </span>
                   </div>
@@ -199,7 +199,7 @@ export default function SubmissionsTable() {
             <div className="mt-4 flex justify-end">
               <button
                 onClick={() => setSelectedSubmission(null)}
-                className="px-4 py-2 bg-slate-800 text-white rounded hover:bg-slate-900"
+                className="px-4 py-2 bg-slate-800 text-white rounded hover:bg-slate-900 cursor-pointer"
               >
                 Close
               </button>

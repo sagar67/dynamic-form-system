@@ -241,7 +241,7 @@ export default function DynamicForm() {
             </form.Field>
           ))}
 
-          <Button type="submit" className="w-full font-bold">
+          <Button type="submit" className="w-full font-bold cursor-pointer">
             Submit
           </Button>
         </form>

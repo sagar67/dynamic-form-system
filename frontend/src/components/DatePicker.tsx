@@ -34,7 +34,7 @@ export default function DatePickerField({
             variant="outline"
             id={field.id}
             className={cn(
-              "w-full justify-start font-normal h-9",
+              "w-full justify-start font-normal h-9 cursor-pointer",
               hasError ? "border-red-500 focus:ring-red-500" : ""
             )}
           >
