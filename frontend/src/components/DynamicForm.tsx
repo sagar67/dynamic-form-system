@@ -63,7 +63,7 @@ const buildZodSchema = (schema: FormSchema) => {
       }
 
       case "number": {
-        let num = z.number({ invalid_type_error: "Must be a number" });
+        let num = z.number({ message: "Must be a number" });
 
         if (typeof validation.min === "number")
           num = num.min(validation.min, `Min ${validation.min}`);
@@ -105,10 +105,11 @@ const buildZodSchema = (schema: FormSchema) => {
       case "date": {
         let date = z.string();
         if (field.required) date = date.min(1, "Required");
-        if (validation.minDate) {
+        const minDate = validation.minDate;
+        if (minDate) {
           date = date.refine(
-            (d) => new Date(d) >= new Date(validation.minDate),
-            `Date must be on or after ${validation.minDate}`
+            (d) => new Date(d) >= new Date(minDate),
+            `Date must be on or after ${minDate}`
           );
         }
         v = date;
@@ -187,7 +188,10 @@ export default function DynamicForm() {
         const details = err?.response?.data?.details;
         if (details && typeof details === "object") {
           Object.entries(details).forEach(([id, errors]) => {
-            formApi.setFieldMeta(id, { errors: errors as string[] });
+            formApi.setFieldMeta(id, (prev) => ({
+              ...prev,
+              errors: errors as string[],
+            }));
           });
         }
       }
